@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+   "HTTP://mybatis.org/dtd/mybatis-3-config.dtd">
+   
+   <configuration>
+   
+      <typeAliases>
+      	<typeAlias type="ezen.main.dto.TransferVO" alias="transferVO"/>
+      	<typeAlias type="ezen.main.dto.TransferVO2" alias="transferVO2"/>
+      	<typeAlias type="ezen.main.dto.BoardVO" alias="boardVO"/>
+      	<typeAlias type="ezen.main.dto.ReplyVO" alias="replyVO"/>
+      </typeAliases>
+   
+   </configuration>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ezen.main.dao.MainDAO">
+	
+	<resultMap type="ezen.main.dto.BoardVO" id="bbsVO">
+		<result property="num" column="NUM"/>
+		<result property="pass" column="PASS"/>
+		<result property="userid" column="USERID"/>
+		<result property="email" column="EMAIL"/>
+		<result property="title" column="TITLE"/>
+		<result property="content" column="CONTENT"/>
+		<result property="imgfilename" column="IMGFILENAME"/>
+		<result property="readcount" column="READCOUNT"/>
+		<result property="writedate" column="WRITEDATE"/>
+		<result property="replycnt" column="REPLYCNT"/>
+	</resultMap>
+	
+	<resultMap type="ezen.main.dto.MemberVO" id="memVO">
+		<result property="id" column="ID"/>
+		<result property="pwd" column="PWD"/>
+		<result property="name" column="NAME"/>
+		<result property="email" column="EMAIL"/>
+		<result property="zip_num" column="ZIP_NUM"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="phone" column="PHONE"/>
+		<result property="useyn" column="USEYN"/>
+		<result property="indate" column="INDATE"/>
+	</resultMap>
+	
+	<resultMap type="ezen.main.dto.ReplyVO" id="repVO">
+		<result property="num" column="NUM"/>
+		<result property="boardnum" column="BOARDNUM"/>
+		<result property="userid" column="USERID"/>
+		<result property="content" column="CONTENT"/>
+		<result property="writedate" column="WRITEDATE"/>
+	</resultMap>
+	
+	<select id="selectBoard" statementType="CALLABLE" parameterType="ezen.main.dto.TransferVO">
+		{ CALL selectBoard(#{paging.startNum}, #{paging.endNum},
+		#{list, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=bbsVO} ) }
+	</select>
+	
+	<select id="getBoardOne" statementType="CALLABLE" parameterType="ezen.main.dto.TransferVO">
+		{ CALL selectBoardOne( #{num}, 
+			#{list, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=bbsVO })}
+	</select><!-- in 변수는 mode 생략 가능 -->
+	
+	<select id="getBoardOneWithoutCount" statementType="CALLABLE" parameterType="ezen.main.dto.TransferVO">
+		{ CALL selectBoardOneWithoutCount( #{num}, 
+			#{list, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=bbsVO })}
+	</select>
+	
+	<select id="getMember" statementType="CALLABLE" parameterType="ezen.main.dto.TransferVO">
+		{ CALL selectMember( 
+				#{id}, 
+				#{list, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=memVO }
+			)
+		}
+	</select>
+	
+	<insert id="insertMember" statementType="CALLABLE" parameterType="ezen.main.dto.MemberVO">
+		{ CALL insertMember(#{id}, #{pwd},#{name}, #{email}, #{phone} ) }
+	</insert>
+	
+	<insert id="insertBoard" statementType="CALLABLE" parameterType="ezen.main.dto.BoardVO">
+		{ CALL insertBoard(#{userid},#{pass}, #{email}, #{title}, #{content}, #{imgfilename} ) }
+	</insert>
+	
+	<update id="boardUpdate" statementType="CALLABLE" parameterType="ezen.main.dto.BoardVO">
+		{ CALL updateBoard(#{num}, #{pass}, #{email}, #{title}, #{content}, #{imgfilename} ) } 
+	</update>
+
+	
+	<update id="updateMember" statementType="CALLABLE" parameterType="ezen.main.dto.MemberVO">
+		{ CALL updateMember(#{name}, #{pwd}, #{email}, #{phone}, #{id} ) }
+	</update>
+	
+	<select id="getAllCount" statementType="CALLABLE" parameterType="ezen.main.dto.TransferVO">
+		{ CALL getAllCount(#{count, mode=OUT, jdbcType=INTEGER} ) }
+	</select>
+	
+	<select id="selectReply" statementType="CALLABLE" parameterType="ezen.main.dto.TransferVO2">
+		{ CALL selectReply( #{num}, 
+			#{list, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=repVO })}
+	</select>
+	
+	<delete id="boardDelete" statementType="CALLABLE" parameterType="ezen.main.dto.TransferVO">
+		{ CALL boardDelete(#{num} ) } 
+	</delete>
+	
+	<insert id="addReply" statementType="CALLABLE" parameterType="ezen.main.dto.ReplyVO">
+		{ CALL addReply(#{boardnum}, #{userid}, #{content} ) }
+	</insert>
+		
+	<delete id="deleteReply" statementType="CALLABLE" parameterType="ezen.main.dto.TransferVO2">
+		{ CALL deleteReply(#{num} ) } 
+	</delete>
+</mapper>
