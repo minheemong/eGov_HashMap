@@ -11,7 +11,7 @@
 	<select id="getBestList" statementType="CALLABLE" parameterType="java.util.HashMap">
 		{ 
 			CALL getBestList(
-				#{ref_cursor , mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=shopMap }  
+				#{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=shopMap }  
 			)
 		}
 	</select>
@@ -27,6 +27,15 @@
 		{ 
 			CALL getKindList(
 				#{ kind } ,
+				#{ref_cursor , mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=shopMap }  
+			)
+		}
+	</select>
+	
+	<select id="getProduct" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{ 
+			CALL getProduct(
+				#{ pseq } ,
 				#{ref_cursor , mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=shopMap }  
 			)
 		}

@@ -36,19 +36,22 @@ public class MemberController {
 		ArrayList< HashMap<String,Object> > list 
 			= (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor");
 		if(list.size() == 0) {  // 입력한 아이디 없다면
-			model.addAttribute("message" , "아이디가 없어요");
+			model.addAttribute("message" , "아이디가 없습니다");
 			return "member/login";
 		}
 		HashMap<String, Object> resultMap = list.get(0);  // 있다면  리스트에서 첫번째 인원정보 추출해서  해시맵에 저장
 		if(resultMap.get("PWD")==null) {
-			model.addAttribute("message" , "관리자에게 문의하세요");
+			model.addAttribute("message" , "비밀번호가 없습니다");
 			return "member/login";
 		}else if( pw.equals( (String)resultMap.get("PWD") ) ) {
 			HttpSession session = request.getSession();
 			session.setAttribute("loginUser", resultMap);
 			return "redirect:/main.do";
+		}else if( !pw.equals( (String)resultMap.get("PWD") ) ) {
+			model.addAttribute("message" , "비밀번호가 맞지 않습니다");
+			return "member/login";
 		}else {
-			model.addAttribute("message" , "비번이 안맞아요");
+			model.addAttribute("message" , "알 수 없는 이유로 로그인되지 않습니다");
 			return "member/login";
 		}
 	}
@@ -75,8 +78,8 @@ public class MemberController {
 		
 		ArrayList< HashMap<String,Object> > list 
 			= (ArrayList<HashMap<String, Object>>) paramMap.get("ref_cursor");
-		if(list.size() == 0) model.addAttribute("result", -1);
-		else model.addAttribute("result", 1);
+		if(list.size() == 0) model.addAttribute("result", -1); // 사용 가능
+		else model.addAttribute("result", 1); // 이미 사용중
 		model.addAttribute("id", id);
 		return "member/idcheck";
 	}
@@ -87,7 +90,7 @@ public class MemberController {
 		String dong=request.getParameter("dong");
 		
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
-		if(dong != null && dong.trim().equals("")==false){			
+		if(dong != null && dong.trim().equals("")==false){			// trim : 공백제거
 			paramMap.put( "ref_cursor", null );
 			paramMap.put("dong", dong);
 			ms.selectAddressByDong(paramMap);
@@ -129,15 +132,12 @@ public class MemberController {
 		String addr1="";
 		String addr2="";
 		if( addr != null) {
-			int k1 = addr.indexOf(" ");
+			int k1 = addr.indexOf(" "); // indexOf : 문자열 앞에서부터 " " 위치 반환
 			int k2 = addr.indexOf(" ", k1+1);
 			int k3 = addr.indexOf(" ", k2+1);
-			addr1 = addr.substring(0, k3);
-			addr2 = addr.substring(k3+1);
+			addr1 = addr.substring(0, k3); // substring : 0부터 k3까지 반환
+			addr2 = addr.substring(k3+1); // k3+1부터 반환
 		}
-		
-		
-		
 		model.addAttribute("addr1", addr1);
 		model.addAttribute("addr2", addr2);
 		
@@ -150,8 +150,8 @@ public class MemberController {
 		
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		
-		paramMap.put("ID", request.getParameter("id") );
-		paramMap.put("PWD" , request.getParameter("pwd"));
+		paramMap.put( "ID", request.getParameter("id") );
+		paramMap.put( "PWD" , request.getParameter("pwd"));
 		paramMap.put( "NAME" ,  request.getParameter("name"));
 		paramMap.put( "PHONE" , request.getParameter("phone"));
 		paramMap.put( "EMAIL" , request.getParameter("email"));

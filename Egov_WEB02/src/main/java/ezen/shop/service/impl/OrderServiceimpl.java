@@ -1,5 +1,7 @@
 package ezen.shop.service.impl;
 
+import java.util.HashMap;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -12,4 +14,19 @@ import ezen.shop.service.OrderService;
 public class OrderServiceimpl extends EgovAbstractServiceImpl implements OrderService{
 
 	@Resource(name="OrderDAO") OrderDAO odao;
+
+	@Override
+	public void insertOrder(HashMap<String, Object> paramMap) {
+		odao.insertOrder(paramMap);
+	}
+
+	@Override
+	public void listOrderByOseq(HashMap<String, Object> paramMap) {
+		odao.listOrderByOseq(paramMap);
+	}
+
+	@Override
+	public void listOrderByResult(HashMap<String, Object> paramMap) {
+		odao.listOrderByResult(paramMap);
+	}
 }

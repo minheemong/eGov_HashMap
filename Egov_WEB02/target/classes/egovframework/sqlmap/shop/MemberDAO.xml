@@ -8,7 +8,7 @@
 	
 	<select id="getMember" statementType="CALLABLE" parameterType="java.util.HashMap" >
 		{
-			CALL selectMember( 
+			CALL getMember( 
 				#{id}, 
 				#{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=shopMap } 
 			)  
@@ -17,7 +17,7 @@
 	
 	<select id="selectAddressByDong" statementType="CALLABLE" parameterType="java.util.HashMap" >
 		{
-			CALL selectZipnum( 
+			CALL selectAddressByDong( 
 				#{dong}, 
 				#{ref_cursor, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=shopMap } 
 			)  

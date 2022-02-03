@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import ezen.shop.service.ProductService;
 
@@ -55,6 +57,23 @@ public class ProductController {
 		model.addAttribute("productKindList", 	list  );
 		return "product/productKind";  
 	}
+	
+	@RequestMapping("productDetail.do")
+	public ModelAndView product_detail( @RequestParam("pseq") int pseq) {
+		ModelAndView mav = new ModelAndView();
+		
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("ref_cursor", null);
+		paramMap.put("pseq", pseq);
+		ps.getProduct(paramMap);
+		ArrayList<HashMap<String, Object>> list 
+			= (ArrayList<HashMap<String, Object>>)paramMap.get("ref_cursor");
+		HashMap<String, Object> resultMap = list.get(0);
+		mav.addObject("productVO", resultMap);
+		mav.setViewName("product/productDetail");
+		return mav;
+	}
+	
 }
 
 

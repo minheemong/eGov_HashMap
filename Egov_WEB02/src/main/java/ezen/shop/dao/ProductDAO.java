@@ -10,5 +10,6 @@ public interface ProductDAO {
 	void getBestList(HashMap<String, Object> paramMap);
 	void getNewList(HashMap<String, Object> paramMap);
 	void getKindList(HashMap<String, Object> paramMap);
+	void getProduct(HashMap<String, Object> paramMap);
 
 }
