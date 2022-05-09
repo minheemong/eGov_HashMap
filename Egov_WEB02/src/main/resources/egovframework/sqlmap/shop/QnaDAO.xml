@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ezen.shop.dao.QnaDAO">
+
+	<select id="listQna" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{  	CALL listQna(	#{ id } , 
+				#{ref_cursor , mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=shopMap } ) }
+	</select>
+	
+	<select id="getQna" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{  	CALL getQna(	#{ qseq } , 
+				#{ref_cursor , mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=shopMap } ) }
+	</select>
+
+	<select id="insertQna" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{  	CALL insertQna(	#{ id } , #{ subject } , #{ content } )  }
+	</select>
+	
+</mapper>
